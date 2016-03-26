@@ -1,0 +1,22 @@
+<div ng-controller="KbnHorizontalBarVisController" class="metric-vis">
+	<nvd3-multi-bar-horizontal-chart
+            data="exampleData"
+            id="exampleId"
+            showXAxis="true"
+            showYAxis="true"
+            width="550"
+            height="330"
+            showControls="true"
+            showLegend="true"
+            showValues="true"
+            interactive="true"
+            tooltips="true"
+            >
+
+        <svg  width="1000" height="500"></svg>
+    </nvd3-multi-bar-horizontal-chart>
+    <!-- <nvd3 options="options" data="data"></nvd3> -->
+    <div class="metric-container" ng-model="metrics">
+    </div>
+
+</div>
