@@ -52,7 +52,7 @@ define(function (require) {
           x: function(d){return d.label;},
           y: function(d){return d.value;},
           showControls: false,
-          stacked: true,
+          stacked: false,
           tooltips: true,
           showValues: true,
           duration: 500,
@@ -320,16 +320,16 @@ define(function (require) {
     var _initConfig = function(){
         margin = 20;
       config = {
-        w: width,
-        h: height,        
+        w: width/2,
+        h: height/2,        
         showAxesLabels: true,
         showAxes: true,
         showLegend: true,
         showControls: false,
         showValues: true,
         showTooltips: true,
-        showStacked: true,
-        showGrouped: false
+        showStacked: false,
+        showGrouped: true
     };
   }
 
@@ -343,8 +343,8 @@ define(function (require) {
         config.showTooltips = $scope.vis.params.addTooltip;
         config.showStacked = $scope.vis.params.addStacked;
         config.showGrouped = $scope.vis.params.addGrouped;
-        config.w = width;
-        config.h = height;
+        config.w = width/2;
+        config.h = height/2;
         config.showValues = $scope.vis.params.addValues;
 
         $scope.options = {
@@ -356,8 +356,8 @@ define(function (require) {
                 height: config.h,
                 showControls: config.showControls,
                 showValues: config.showValues,
-                stacked: config.showStacked,
-                grouped: config.showGrouped,
+                stacked: false,
+                // grouped: true,
                 showLegend: config.showLegend,
                 tooltips: config.showTooltips,
                 duration: 500,
@@ -393,14 +393,10 @@ define(function (require) {
     $scope.$watch('esResponse', function (resp) {
       _initConfig();
       if (resp) {
-        tableGroups = tabifyAggResponse($scope.vis, resp);
-        if(tableGroups.tables.length>0){
-          if(tableGroups.tables[0].columns.length > 1){
-            _updateDimensions();
-            $scope.processTableGroups(tableGroups);
-            _updateConfig();
-          }
-        }        
+        tableGroups = tabifyAggResponse($scope.vis, resp);    
+        _updateDimensions();
+        $scope.processTableGroups(tableGroups);
+        _updateConfig();
       }
     });
   });
