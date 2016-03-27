@@ -10,14 +10,18 @@
 
 <div>
    <label>
-    <input type="checkbox" value="{{addStacked}}" ng-model="vis.params.addStacked" name="addStacked" ng-checked="vis.params.addStacked">
+    <input type="radio" ng-model="vis.params.addStacked" name="mode" ng-value="vis.params.addStacked">
    Stacked
+  </label>
+  <label>
+    <input type="radio" ng-model="vis.params.addGrouped" name="mode" ng-value="vis.params.addGrouped">
+   Grouped
   </label>
 </div>
 <div>
    <label>
-    <input type="checkbox" value="{{addGrouped}}" ng-model="vis.params.addGrouped" name="addGrouped" ng-checked="vis.params.addGrouped">
-   Grouped
+    <input type="checkbox" value="{{addValues}}" ng-model="vis.params.addValues" name="addValues" ng-checked="vis.params.addValues">
+   Show Values
   </label>
 </div>
 <div>

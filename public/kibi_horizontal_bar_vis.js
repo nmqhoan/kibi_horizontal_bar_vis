@@ -27,16 +27,11 @@ define(function (require) {
       template: require('plugins/kibi_horizontal_bar_vis/kibi_horizontal_bar_vis.html'),
        params: {
         defaults: {
-          shareYAxis: true,
-          addTooltip: true,
           addLegend: true,
-          scale: 'linear',
-          mode: 'stacked',
-          times: [],
-          addTimeMarker: false,
-          defaultYExtents: false,
-          setYExtents: false,
-          yAxis: {}
+          addTooltip: true,
+          addStacked: true,      
+          addGrouped: false,    
+          addValues: true,
         },
         scales: ['linear', 'log', 'square root'],
         modes: ['stacked', 'percentage', 'grouped'],
