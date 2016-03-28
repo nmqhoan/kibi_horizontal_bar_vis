@@ -11,7 +11,7 @@ describe('metric vis', function () {
   beforeEach(ngMock.module('kibana/metric_vis'));
   beforeEach(ngMock.inject(function ($rootScope, $controller) {
     $scope = $rootScope.$new();
-    $controller('KbnMetricVisController', {$scope: $scope});
+    $controller('KbnHorizontalBarVisController', {$scope: $scope});
     $scope.$digest();
   }));
 
