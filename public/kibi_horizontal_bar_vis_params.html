@@ -10,12 +10,8 @@
 
 <div>
    <label>
-    <input type="radio" ng-model="vis.params.addStacked" name="mode" ng-value="vis.params.addStacked">
-   Stacked
-  </label>
-  <label>
-    <input type="radio" ng-model="vis.params.addGrouped" name="mode" ng-value="vis.params.addGrouped">
-   Grouped
+    <input type="checkbox" value="{{addControl}}" ng-model="vis.params.addControl" name="addControl" ng-checked="vis.params.addControl">
+   Show Controls
   </label>
 </div>
 <div>

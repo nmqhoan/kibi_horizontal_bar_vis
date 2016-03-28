@@ -28,9 +28,8 @@ define(function (require) {
        params: {
         defaults: {
           addLegend: true,
-          addTooltip: true,
-          addStacked: true,      
-          addGrouped: false,    
+          addTooltip: true,              
+          addControl: true,    
           addValues: true,
         },
         scales: ['linear', 'log', 'square root'],

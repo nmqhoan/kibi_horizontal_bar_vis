@@ -8,7 +8,7 @@ define(function (require) {
   module.controller('KbnHorizontalBarVisController', function ($scope, $element, $rootScope, Private) {
     var tabifyAggResponse = Private(require('ui/agg_response/tabify/tabify'));
 
-    var data, config, chart_vis;
+    var data, config;
     var margin, width, height;
 
     // declare data
@@ -36,296 +36,101 @@ define(function (require) {
     };
 
     var off = $rootScope.$on('change:vis', function () {
+        // console.log("change vis");
       _updateDimensions();
-      _initConfig();
+      // _initConfig();
       $scope.processTableGroups(tableGroups);
       _updateConfig();
     });
 
     $scope.$on('$destroy', off);
 
-    $scope.options = {
-      chart: {
-          type: 'multiBarHorizontalChart',
-          height: 450,
-          width: 850,
-          x: function(d){return d.label;},
-          y: function(d){return d.value;},
-          showControls: false,
-          stacked: false,
-          tooltips: true,
-          showValues: true,
-          duration: 500,
-          xAxis: {
-              showMaxMin: false
-          },
-          yAxis: {
-              axisLabel: 'Values',
-              tickFormat: function(d){
-                  return d3.format(',.2f')(d);
-              }
-          },                
-          dispatch: {
-              elementClick: function(e){ console.log('click') },
-              elementMouseover: function(e){ console.log('mouseover') },
-              elementMouseout: function(e){ console.log('mouseout') },
-              renderEnd: function(e){ console.log('renderEnd') }
-          },
-          legend: {
-              dispatch: {
-                  legendClick: function(e) {
-                    console.log("legend click");
-                    _updateConfig();
-                  }
-              }
-          }                
-      }
-  };
-    $scope.data = [
-        {
-            "key": "Series1",
-            "color": "#d62728",
-            "values": [
-                {
-                    "label" : "Group A" ,
-                    "value" : -1.8746444827653
-                } ,
-                {
-                    "label" : "Group B" ,
-                    "value" : -8.0961543492239
-                } ,
-                {
-                    "label" : "Group C" ,
-                    "value" : -0.57072943117674
-                } ,
-                {
-                    "label" : "Group D" ,
-                    "value" : -2.4174010336624
-                } ,
-                {
-                    "label" : "Group E" ,
-                    "value" : -0.72009071426284
-                } ,
-                {
-                    "label" : "Group F" ,
-                    "value" : -0.77154485523777
-                } ,
-                {
-                    "label" : "Group G" ,
-                    "value" : -0.90152097798131
-                } ,
-                {
-                    "label" : "Group H" ,
-                    "value" : -0.91445417330854
-                } ,
-                {
-                    "label" : "Group I" ,
-                    "value" : -0.055746319141851
-                }
-            ]
-        },
-        {
-            "key": "Series2",
-            "color": "#1f77b4",
-            "values": [
-                {
-                    "label" : "Group A" ,
-                    "value" : 25.307646510375
-                } ,
-                {
-                    "label" : "Group B" ,
-                    "value" : 16.756779544553
-                } ,
-                {
-                    "label" : "Group C" ,
-                    "value" : 18.451534877007
-                } ,
-                {
-                    "label" : "Group D" ,
-                    "value" : 8.6142352811805
-                } ,
-                {
-                    "label" : "Group E" ,
-                    "value" : 7.8082472075876
-                } ,
-                {
-                    "label" : "Group F" ,
-                    "value" : 5.259101026956
-                } ,
-                {
-                    "label" : "Group G" ,
-                    "value" : 0.30947953487127
-                } ,
-                {
-                    "label" : "Group H" ,
-                    "value" : 0
-                } ,
-                {
-                    "label" : "Group I" ,
-                    "value" : 0
-                }
-            ]
-        }
-    ];
+  //   $scope.options = {
+  //     chart: {
+  //         type: 'multiBarHorizontalChart',
+  //         width: config.w - config.margin,
+  //         height: config.h - config.margin,
+  //         margin : {
+  //           top : 20,
+  //           left : 100,
+  //           bottom : 50
+  //         },
+  //         x: function(d){return d.label;},
+  //         y: function(d){return d.value;},
+  //         showControls: false,
+  //         stacked: false,
+  //         tooltips: true,
+  //         showValues: true,
+  //         duration: 500,
+  //         xAxis: {
+  //             showMaxMin: false
+  //         },
+  //         yAxis: {
+  //             axisLabel: 'Values',
+  //             tickFormat: function(d){
+  //                 return d3.format(',.2f')(d);
+  //             }
+  //         },                
+  //         dispatch: {
+  //             elementClick: function(e){ console.log('click') },
+  //             elementMouseover: function(e){ console.log('mouseover') },
+  //             elementMouseout: function(e){ console.log('mouseout') },
+  //             renderEnd: function(e){ console.log('renderEnd') }
+  //         },
+  //         legend: {
+  //             dispatch: {
+  //                 legendClick: function(e) {
+  //                   console.log("legend click");
+  //                   _updateConfig();
+  //                 }
+  //             }
+  //         }                
+  //     }
+  // };
+    
 
-    var chart;
-   
-    var long_short_data = [
-        {
-            key: 'Series1',
-            values: [
-                {
-                    "label" : "Group A" ,
-                    "value" : -1.8746444827653
-                } ,
-                {
-                    "label" : "Group B" ,
-                    "value" : -8.0961543492239
-                } ,
-                {
-                    "label" : "Group C" ,
-                    "value" : -0.57072943117674
-                } ,
-                {
-                    "label" : "Group D" ,
-                    "value" : -2.4174010336624
-                } ,
-                {
-                    "label" : "Group E" ,
-                    "value" : -0.72009071426284
-                } ,
-                {
-                    "label" : "Group F" ,
-                    "value" : -2.77154485523777
-                } ,
-                {
-                    "label" : "Group G" ,
-                    "value" : -9.90152097798131
-                } ,
-                {
-                    "label" : "Group H" ,
-                    "value" : 14.91445417330854
-                } ,
-                {
-                    "label" : "Group I" ,
-                    "value" : -3.055746319141851
-                }
-            ]
-        },
-        {
-            key: 'Series2',
-            values: [
-                {
-                    "label" : "Group A" ,
-                    "value" : 25.307646510375
-                } ,
-                {
-                    "label" : "Group B" ,
-                    "value" : 16.756779544553
-                } ,
-                {
-                    "label" : "Group C" ,
-                    "value" : 18.451534877007
-                } ,
-                {
-                    "label" : "Group D" ,
-                    "value" : 8.6142352811805
-                } ,
-                {
-                    "label" : "Group E" ,
-                    "value" : 7.8082472075876
-                } ,
-                {
-                    "label" : "Group F" ,
-                    "value" : 5.259101026956
-                } ,
-                {
-                    "label" : "Group G" ,
-                    "value" : 7.0947953487127
-                } ,
-                {
-                    "label" : "Group H" ,
-                    "value" : 8
-                } ,
-                {
-                    "label" : "Group I" ,
-                    "value" : 21
-                }
-            ]
-        },
-        {
-            key: 'Series3',
-            values: [
-                {
-                    "label" : "Group A" ,
-                    "value" : -14.307646510375
-                } ,
-                {
-                    "label" : "Group B" ,
-                    "value" : 16.756779544553
-                } ,
-                {
-                    "label" : "Group C" ,
-                    "value" : -18.451534877007
-                } ,
-                {
-                    "label" : "Group D" ,
-                    "value" : 8.6142352811805
-                } ,
-                {
-                    "label" : "Group E" ,
-                    "value" : -7.8082472075876
-                } ,
-                {
-                    "label" : "Group F" ,
-                    "value" : 15.259101026956
-                } ,
-                {
-                    "label" : "Group G" ,
-                    "value" : -0.30947953487127
-                } ,
-                {
-                    "label" : "Group H" ,
-                    "value" : 0
-                } ,
-                {
-                    "label" : "Group I" ,
-                    "value" : 0
-                }
-            ]
-        }
-    ];
+    var chart;   
 
     $scope.processTableGroups = function (tableGroups) {
+      $scope.data = [];
       tableGroups.tables.forEach(function (table) {
-        data = [];
+        var rows = table.rows;
         var cols = table.columns;
-        table.rows.forEach(function(row,i){
-            var group = {};
-            group['group'] = row[0];
-            var axes = [];
-            for (var i = 1; i < row.length; i++) {
-                var item = {};
-                item.axis = cols[i].aggConfig.params.field.displayName;
-                item.value = row[i];
-                axes.push(item);              
-            }
-            group.axes = axes;
-            data.push(group);
-        });
+        for (var i = 1; i < cols.length; i++) {
+          var group = {};
+          var groupKey = '';
+          if (cols[i].aggConfig.params.field != null) {
+            groupKey = cols[i].aggConfig.params.field.displayName;
+          } else {
+            groupKey = cols[i].aggConfig.type.name;
+          }
+          group['key'] = groupKey;
+          var values = [];
+          for (var j = 0; j < rows.length; j++) {
+            var row = rows[j];
+            var item = {};
+            item.label = row[0];
+            item.value = row[i];
+            values.push(item);
+          }
+          group.values = values;
+          $scope.data.push(group);
+        }
+
       });
     };
 
   // set default config  
     var _initConfig = function(){
-        margin = 20;
+        
       config = {
-        w: width/2,
-        h: height/2,        
+        margin : 50,
+        w: width - margin,
+        h: height - margin,        
         showAxesLabels: true,
         showAxes: true,
         showLegend: true,
-        showControls: false,
+        showControls: true,
         showValues: true,
         showTooltips: true,
         showStacked: false,
@@ -333,18 +138,12 @@ define(function (require) {
     };
   }
 
-   // $scope.$on('legendClick.directive', function(angularEvent, event){
-   //    console.log("legend click");
-   //    // _updateConfig();
-   //  });
-
    var _updateConfig = function() {    
         config.showLegend = $scope.vis.params.addLegend;
         config.showTooltips = $scope.vis.params.addTooltip;
-        config.showStacked = $scope.vis.params.addStacked;
-        config.showGrouped = $scope.vis.params.addGrouped;
-        config.w = width/2;
-        config.h = height/2;
+        config.showControls = $scope.vis.params.addControl;
+        config.w = width;
+        config.h = height;
         config.showValues = $scope.vis.params.addValues;
 
         $scope.options = {
@@ -352,11 +151,16 @@ define(function (require) {
                 type: 'multiBarHorizontalChart',
                 x: function(d){return d.label;},
                 y: function(d){return d.value;},
-                width: config.w,
-                height: config.h,
+                width: config.w - config.margin,
+                height: config.h - config.margin,
+                margin : {
+                    top : 20,
+                    left : 100,
+                    bottom : 50
+                },
                 showControls: config.showControls,
                 showValues: config.showValues,
-                stacked: false,
+                // stacked: false,
                 // grouped: true,
                 showLegend: config.showLegend,
                 tooltips: config.showTooltips,
@@ -379,15 +183,13 @@ define(function (require) {
                 legend: {
                     dispatch: {
                         legendClick: function(e) {
-                          console.log("legend click");
-                          _updateConfig();
+                          // console.log("legend click");
+                          // _updateConfig();
                         }
                     }
                 }                
             }
-        };
-        // $scope.data = long_short_data;
-        
+        };      
     };
 
     $scope.$watch('esResponse', function (resp) {
